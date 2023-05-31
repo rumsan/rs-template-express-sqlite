@@ -1,1 +1,1 @@
-# rs-asset-service
+# Simple TS Express Sqlite Template

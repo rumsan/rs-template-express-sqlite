@@ -1,0 +1,11 @@
+node_modules/
+data/
+dist/
+.env
+yarn-error.log
+tsconfig.tsbuildinfo
+key.json
+tmp/
+play/
+
+
