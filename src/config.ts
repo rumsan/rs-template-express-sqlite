@@ -10,6 +10,7 @@ const getEnv = (envVarName: string): string => {
 
 export const PORT = getEnv('PORT');
 export const APP_NAME = getEnv('RS_APP_NAME');
+export const PRIVATE_KEY = getEnv('RS_PRIVATE_KEY');
 
 class Config {
   private _secret = '';
@@ -23,5 +24,3 @@ class Config {
   }
 }
 export default new Config();
-
-export const PRIVATE_KEY = process.env.PRIVATE_KEY as string;

@@ -1,20 +1,37 @@
-# ---- Production Image ----
-FROM node:18.12.1-alpine3.17
-RUN apk add --update git
+# Stage 1: Build the TypeScript project
+FROM node:18 as build
 
-# Remove any existing entrypoint or cmd instruction
-ENTRYPOINT []
-CMD []
-
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
-# Copy the build output from the previous stage
-COPY ./dist ./
+# Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install only production dependencies
-RUN yarn
+# Install dependencies
+RUN npm install
 
-# Set the command to run your application
-CMD [ "node", "./index.js" ]
+# Copy the rest of the source code
+COPY . .
+
+# Build the TypeScript project
+RUN npm run build
+
+# Stage 2: Create the Docker image using the built files
+FROM node:18.12.1-alpine3.17
+
+# Set the working directory
+WORKDIR /app
+
+# Copy only the built files from the previous stage
+COPY --from=build /app/dist ./dist
+COPY package.json .
+
+# Install only production dependencies
+# RUN npm install --only=production
+RUN npm install --omit=dev
+
+# Expose the desired port (replace 3000 with your application's port)
+EXPOSE 3000
+
+# Start the application
+CMD ["node", "./dist/index.js"]

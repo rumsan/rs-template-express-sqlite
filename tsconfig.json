@@ -21,5 +21,8 @@
     "noFallthroughCasesInSwitch": false,
     "resolveJsonModule": true
   },
-  "exclude": ["node_modules", "data", "dist", "tests", "play"]
+  "exclude": ["node_modules", "data", "dist", "tests", "play"],
+  "ts-node": {
+    "swc": true
+  }
 }
